@@ -13,7 +13,7 @@ fi
 
 while read host; do
 	if [ ! -e hosts/$host  ];then
-		nmap -Pn -A -T4 -sS -sV --top-ports 1000 $host | tee hosts/$host
+		nmap -Pn -A -T4 -sS -sV -p- $host | tee hosts/$host
 	fi
 done < $2
 
