@@ -26,9 +26,9 @@ while [ 1 == 1 ]; do
 	sleep 1200
 	scan NEW_hosts.lst
 	diff hosts.lst NEW_hosts.lst | grep ">" > /dev/null
-	if [ $? -eq 0 ]; then
+	if [ $? -eq 1 ]; then
 		date +%H:%M_%e-%m-%Y >> hosts.dif
-		diff hosts.lst NEW_hosts.lst | tee hosts.dif | grep ">" | sed 's/> //' | tee -a hosts.lst
+		diff hosts.lst NEW_hosts.lst | tee -a hosts.dif | grep ">" | sed 's/> //' | tee -a hosts.lst
 		sort -n hosts.lst | uniq > hosts.lst
 	fi
 	rm NEW_hosts.lst
