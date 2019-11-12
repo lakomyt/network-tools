@@ -29,7 +29,9 @@ while [ 1 == 1 ]; do
 	if [ $? -eq 1 ]; then
 		date +%H:%M_%e-%m-%Y >> hosts.dif
 		diff hosts.lst NEW_hosts.lst | tee -a hosts.dif | grep ">" | sed 's/> //' | tee -a hosts.lst
-		sort -n hosts.lst | uniq > hosts.lst
+		sort -n hosts.lst | uniq > hosts.lst2
+		cat hosts.lst2 > hosts.lst
+		rm hosts.lst2
 	fi
 	rm NEW_hosts.lst
 done
