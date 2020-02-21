@@ -15,7 +15,7 @@ scan(){
 	echo Scanning with arp-scan...
 	arp-scan -l | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > hosts.arp
 	echo DONE.
-	sort -n hosts.nmap hosts.arp | uniq | sort -n > $1
+	sort -n hosts.nmap hosts.arp | uniq | sort -t . -k 3,3n -k 4,4n > $1
 	rm hosts.nmap hosts.arp
 	cat $1 | grep "`ip route get 1.1.1.1 | head -1 | awk '{print $7}'`" -v | tee $1
 }
@@ -29,7 +29,7 @@ while [ 1 == 1 ]; do
 	if [ $? -eq 1 ]; then
 		date +%H:%M_%e-%m-%Y >> hosts.dif
 		diff hosts.lst NEW_hosts.lst | tee -a hosts.dif | grep ">" | sed 's/> //' | tee -a hosts.lst
-		sort -n hosts.lst | uniq > hosts.lst2
+		sort -t . -k 3,3n -k 4,4n hosts.lst | uniq > hosts.lst2
 		cat hosts.lst2 > hosts.lst
 		rm hosts.lst2
 	fi
