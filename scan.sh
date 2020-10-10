@@ -15,9 +15,9 @@ scan(){
 	echo Scanning with arp-scan...
 	arp-scan -l | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > hosts.arp
 	echo DONE.
-	sort -n hosts.nmap hosts.arp | uniq | sort -t . -k 3,3n -k 4,4n > $1
+	sort -n hosts.nmap hosts.arp | uniq | sort -t . -k 3,3n -k 4,4n | tee $1
 	rm hosts.nmap hosts.arp
-	cat $1 | grep "`ip route get 1.1.1.1 | head -1 | awk '{print $7}'`" -v | tee $1
+	cat $1 | grep "`ip route get 1.1.1.1 | head -1 | awk '{print $7}'`" -v > $1
 }
 
 scan hosts.lst
